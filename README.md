@@ -116,3 +116,9 @@ Use the sidebar to filter by minimum area, optional maximum area, or border cont
 Supported inputs: single 2D grayscale or RGB images up to 4096 × 4096 pixels; TIFF stacks/volumes are rejected with a message. Original higher-bit-depth pixels are retained for inference, with linear min–max scaling used only for preview. uint8 images use their original 0–255 display range. First model use downloads approximately 1.15 GiB of weights; GPU acceleration uses Apple MPS when available, otherwise CPU.
 
 The app runs locally; no hosting deployment is included. Predicted boundaries, counts, filter decisions, and nuclear pixel areas need visual review and are not validated biological measurements.
+
+## Days 56–57: CSV export and reference evaluation
+
+After detection, click **Download counts and measurements (CSV)**. The report contains the source filename, detected and retained counts, all original IDs, pixel areas, retention status, and exclusion reasons. Image-level counts are repeated on each object row; do not sum those count columns. A zero-detection result includes a summary row with blank object fields. Filter changes update the download.
+
+Run `python scripts/evaluate_day57.py` to reproduce the three-image counting and segmentation evaluation. See [EVALUATION.md](EVALUATION.md) for methods, results, and limitations. Both raw and filtered predictions are evaluated. Filtering improved count MAE slightly but removed some annotated objects; thresholds require review. This is exploratory evaluation, not held-out or official CTC benchmark performance.

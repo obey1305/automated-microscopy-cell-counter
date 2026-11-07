@@ -11,6 +11,7 @@ import torch
 from cellpose import models
 from scripts.cell_analysis import count_cells, filter_cells
 from scripts.image_tools import load_image, display_rgb, numbered_overlay
+from scripts.reporting import export_cells_csv
 
 st.set_page_config(page_title='Microscopy Cell Counter', layout='wide')
 st.title('Microscopy Cell Counter')
@@ -84,6 +85,9 @@ if 'masks' in st.session_state:
     a.metric('Detected objects', count_cells(masks))
     b.metric('Retained objects', count_cells(filtered))
     c.metric('Excluded objects', count_cells(masks) - count_cells(filtered))
+    st.download_button('Download counts and measurements (CSV)',
+                       data=export_cells_csv(filename, records, count_cells(masks), count_cells(filtered)),
+                       file_name=Path(filename).stem + '_cell_measurements.csv', mime='text/csv')
     if count_cells(filtered) == 0:
         st.info('No objects remain. Review the image and filter settings.')
     st.dataframe([dict(ID=r['id'], Area_pixels=r['area_pixels'], Retained=r['kept'],
