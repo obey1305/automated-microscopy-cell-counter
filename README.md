@@ -65,3 +65,18 @@ The image shows nuclei; predicted objects are not a validated total cell count. 
 Model documentation: https://cellpose.readthedocs.io/en/latest/models.html
 
 Verified local Day 49 run (8 November 2026): Cellpose 4.2.1.1, `cpsam_v2`, Apple MPS; 26 predicted objects on `01/t021.tif`, 13.07 seconds inference (excluding download/model initialization). Saved mask dimensions and label count were checked against the run summary.
+
+## Days 50–51: numbered boundaries and automatic counting
+
+After running Day 49, run:
+
+```bash
+python scripts/visualize_day50_51.py
+python -m unittest discover -s tests -v
+```
+
+Day 50 displays the saved sample segmentation with orange boundaries and cyan identification numbers. IDs are the original positive instance labels in the mask; label positions are inside the corresponding objects. Outputs: `results/day50_51/numbered_cell_boundaries.png` and `results/day50_51/cell_count.json`. The figure and report remain local.
+
+Day 51 adds `count_cells(masks)` in `scripts/cell_analysis.py`, also used by the Day 49 script. It counts distinct positive IDs, excludes background zero, handles gaps in IDs, and includes objects touching image borders. It expects a 2D nonnegative integer instance mask; a binary foreground image does not distinguish individual objects.
+
+Verified sample result: **26 predicted objects, with 26 displayed IDs**. Tests cover gaps in IDs, all-background masks, masks with no background, and invalid input. These are predicted nuclear instances; accuracy and biological cell counts have not been validated.

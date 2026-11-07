@@ -17,6 +17,7 @@ import numpy as np
 import tifffile
 import torch
 from cellpose import models, utils
+from cell_analysis import count_cells
 
 
 def main():
@@ -36,7 +37,7 @@ def main():
     masks, flows, styles = model.eval(image, **parameters)
     elapsed = time.perf_counter() - started
     assert masks.shape == image.shape and np.issubdtype(masks.dtype, np.integer)
-    count = int(np.unique(masks[masks > 0]).size)
+    count = count_cells(masks)
     tifffile.imwrite(output / 'sample_masks.tif', masks.astype(np.uint32))
     outlines = utils.masks_to_outlines(masks)
     overlay = np.repeat((image.astype(np.float32) / 255)[..., None], 3, axis=-1)
