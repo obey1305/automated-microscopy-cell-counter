@@ -1,0 +1,4 @@
+cellpose
+opencv-python-headless
+numpy
+streamlit
