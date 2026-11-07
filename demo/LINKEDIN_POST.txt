@@ -1,0 +1,9 @@
+Completed my automated microscopy cell-counter project: a Python + Cellpose + Streamlit prototype that turns an uploaded image into numbered outlines, object counts, pixel-area measurements, and downloadable CSV reports.
+
+The short demo uses generated microscope-like imagery. It shows upload → pretrained inference → numbered boundaries → adjustable filters → CSV export.
+
+A useful lesson from testing: matching the total count does not guarantee correct segmentation, and small-object filters can remove real objects. I tested crowded, overlapping and low-contrast cases and documented input formats and limitations.
+
+This is a learning/research prototype, not a clinically validated tool. Nuclear images produce nuclear measurements rather than whole-cell areas.
+
+#Python #Streamlit #Cellpose #ComputerVision #BioimageAnalysis #LearningInPublic

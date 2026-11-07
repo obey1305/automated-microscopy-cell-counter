@@ -26,7 +26,7 @@ def get_model():
 
 
 upload = st.file_uploader('Upload a microscopy image', type=['png', 'jpg', 'jpeg', 'tif', 'tiff'],
-                          help='Single 2D grayscale or RGB image, up to 4096 × 4096 pixels.')
+                          max_upload_size=32, help='Single 2D grayscale or RGB image, up to 4096 × 4096 pixels and 32 MiB.')
 sample = ROOT / 'data/raw/Fluo-N2DH-GOWT1/Fluo-N2DH-GOWT1/01/t021.tif'
 if sample.is_file():
     use_sample = st.checkbox('Use the local sample image', value=False)
@@ -51,6 +51,8 @@ key = hashlib.sha256(data).hexdigest()
 if st.session_state.get('image_key') != key:
     st.session_state['image_key'] = key
     st.session_state.pop('masks', None)
+if float(image.max()) == float(image.min()):
+    st.warning('This image has no intensity variation. Detection is unlikely to be useful.')
 st.subheader(filename)
 st.caption(f'{image.shape[1]} × {image.shape[0]} pixels · {image.dtype}')
 
