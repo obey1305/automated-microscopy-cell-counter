@@ -29,3 +29,6 @@ Cellpose installation guidance: https://cellpose.readthedocs.io/en/latest/instal
 - Demonstration
 
 Day 46 covers repository creation and dependency installation only. No segmentation application or pretrained model download is included yet. Cellpose downloads model weights on first model use.
+
+## Day 47: dataset download
+Downloaded and verified the Cell Tracking Challenge Fluo-N2DH-GOWT1 training dataset: 184 microscopy frames and 50 gold segmentation masks, plus tracking and silver annotations. See [DATASET.md](DATASET.md) for local paths, source, checksum, limitations, verification, and use conditions. Dataset files are stored locally and excluded from Git.
