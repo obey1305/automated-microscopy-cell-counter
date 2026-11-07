@@ -44,3 +44,24 @@ python scripts/visualize_day48.py
 The script loads `01/t000.tif`, `01/t046.tif`, and `02/t000.tif` with tifffile and displays them side by side using Matplotlib. Each panel shows the sequence, filename, and image dimensions. All panels use the same raw 0–255 grayscale range, with no contrast normalization. The result is saved to `results/day48_three_microscopy_images.png`. This day visualizes raw microscopy images; no segmentation or cell counting is performed.
 
 The generated figure contains source imagery and stays local under the ignored `results/` directory. See [DATASET.md](DATASET.md) for attribution and use conditions.
+
+## Day 49: pretrained Cellpose inference
+
+Run in the project environment:
+
+```bash
+python scripts/run_day49_cellpose.py
+```
+
+The script loads the full 1024 × 1024 sample `01/t021.tif`, downloads the official pretrained `cpsam_v2` weights on first use into `.cellpose/models/`, and runs Cellpose without training. Apple MPS is used when available, otherwise CPU. Model weights are approximately 1.15 GiB; first use requires internet access. Float32 and a batch size of one are used.
+
+Outputs remain local in `results/day49/`:
+- `sample_masks.tif`: uint32 instance labels, with zero for background.
+- `segmentation_preview.png`: raw image beside orange predicted boundaries.
+- `run_summary.json`: input checksum, model/version, parameters, device, runtime, and predicted object count.
+
+The image shows nuclei; predicted objects are not a validated total cell count. This exercise demonstrates inference and does not evaluate accuracy against the dataset annotations. Dataset imagery and model weights are excluded from Git.
+
+Model documentation: https://cellpose.readthedocs.io/en/latest/models.html
+
+Verified local Day 49 run (8 November 2026): Cellpose 4.2.1.1, `cpsam_v2`, Apple MPS; 26 predicted objects on `01/t021.tif`, 13.07 seconds inference (excluding download/model initialization). Saved mask dimensions and label count were checked against the run summary.
