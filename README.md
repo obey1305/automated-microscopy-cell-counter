@@ -99,3 +99,20 @@ Local outputs in `results/day52_53/`:
 - `filter_comparison.png`: labeled before/after visualization.
 
 Verified sample run with the command above: **26 original objects → 22 retained**, excluding IDs 7 (910 px, also touching border), 8 (834 px), 11 (745 px), and 12 (444 px). All four are below the chosen minimum. No maximum area was applied. These exclusions are heuristic decisions, not validated false detections. Generated imagery and masks stay local under the ignored `results/` directory.
+
+## Days 54–55: Streamlit upload and numbered outlines
+
+From the repository root:
+
+```bash
+source .venv/bin/activate
+streamlit run app.py
+```
+
+Open the local address printed by Streamlit (normally http://localhost:8501). Upload a PNG, JPEG, or single-image TIFF, or select **Use the local sample image** when the Day 47 dataset is present. Click **Detect cells** to run pretrained `cpsam_v2`. The original and orange outlines with cyan mask IDs appear side by side, with detected/retained/excluded counts and pixel areas.
+
+Use the sidebar to filter by minimum area, optional maximum area, or border contact. Filters reuse the current predictions without rerunning Cellpose. A new image clears the old predictions. The initial minimum is zero to show all model detections; set 1,000 to reproduce the Day 53 sample exclusions. Cellpose itself uses a 15-pixel minimum during inference.
+
+Supported inputs: single 2D grayscale or RGB images up to 4096 × 4096 pixels; TIFF stacks/volumes are rejected with a message. Original higher-bit-depth pixels are retained for inference, with linear min–max scaling used only for preview. uint8 images use their original 0–255 display range. First model use downloads approximately 1.15 GiB of weights; GPU acceleration uses Apple MPS when available, otherwise CPU.
+
+The app runs locally; no hosting deployment is included. Predicted boundaries, counts, filter decisions, and nuclear pixel areas need visual review and are not validated biological measurements.
