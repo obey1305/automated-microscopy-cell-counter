@@ -80,3 +80,22 @@ Day 50 displays the saved sample segmentation with orange boundaries and cyan id
 Day 51 adds `count_cells(masks)` in `scripts/cell_analysis.py`, also used by the Day 49 script. It counts distinct positive IDs, excludes background zero, handles gaps in IDs, and includes objects touching image borders. It expects a 2D nonnegative integer instance mask; a binary foreground image does not distinguish individual objects.
 
 Verified sample result: **26 predicted objects, with 26 displayed IDs**. Tests cover gaps in IDs, all-background masks, masks with no background, and invalid input. These are predicted nuclear instances; accuracy and biological cell counts have not been validated.
+
+## Days 52–53: individual areas and artifact filters
+
+```bash
+python scripts/analyze_day52_53.py --min-area 1000 --exclude-border
+python -m unittest discover -s tests -v
+```
+
+`measure_cell_areas(masks)` in `scripts/cell_analysis.py` returns each original instance ID and its pixel count. These are nuclear mask areas in pixels, not calibrated whole-cell areas. `filter_cells(masks, min_area=1000, max_area=None, exclude_border=False)` creates a filtered copy and an audit record for every original object. It supports inclusive minimum/maximum area bounds and optional rejection of edge-touching objects. Rejected labels become zero; retained IDs stay unchanged. Original masks are preserved.
+
+The minimum of 1,000 pixels is a demonstration setting for this sample, not a validated biological cutoff. Border objects can be real partial nuclei; maximum-area rejection can flag potential merged regions but does not prove an artifact. Adjust these controls for each dataset and inspect the results.
+
+Local outputs in `results/day52_53/`:
+- `cell_areas.csv`: all original IDs, pixel areas, border status, retention status and exclusion reasons.
+- `filtered_masks.tif`: retained instances with original IDs.
+- `filter_summary.json`: filter settings, before/after counts and object records.
+- `filter_comparison.png`: labeled before/after visualization.
+
+Verified sample run with the command above: **26 original objects → 22 retained**, excluding IDs 7 (910 px, also touching border), 8 (834 px), 11 (745 px), and 12 (444 px). All four are below the chosen minimum. No maximum area was applied. These exclusions are heuristic decisions, not validated false detections. Generated imagery and masks stay local under the ignored `results/` directory.
