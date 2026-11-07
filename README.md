@@ -32,3 +32,15 @@ Day 46 covers repository creation and dependency installation only. No segmentat
 
 ## Day 47: dataset download
 Downloaded and verified the Cell Tracking Challenge Fluo-N2DH-GOWT1 training dataset: 184 microscopy frames and 50 gold segmentation masks, plus tracking and silver annotations. See [DATASET.md](DATASET.md) for local paths, source, checksum, limitations, verification, and use conditions. Dataset files are stored locally and excluded from Git.
+
+## Day 48: load and visualize three images
+
+With the environment activated and the Day 47 data downloaded, run:
+
+```bash
+python scripts/visualize_day48.py
+```
+
+The script loads `01/t000.tif`, `01/t046.tif`, and `02/t000.tif` with tifffile and displays them side by side using Matplotlib. Each panel shows the sequence, filename, and image dimensions. All panels use the same raw 0–255 grayscale range, with no contrast normalization. The result is saved to `results/day48_three_microscopy_images.png`. This day visualizes raw microscopy images; no segmentation or cell counting is performed.
+
+The generated figure contains source imagery and stays local under the ignored `results/` directory. See [DATASET.md](DATASET.md) for attribution and use conditions.
