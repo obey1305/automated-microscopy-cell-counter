@@ -88,10 +88,10 @@ python -m pip check
 | 54–56 | `python -m streamlit run app.py`; uploads, numbered outlines and CSV |
 | 57 | `python scripts/evaluate_day57.py` |
 | 58–59 | `python scripts/stress_test_day58.py`; `python scripts/stress_test_real_day58.py` |
-| 60 | `demo/microscopy-app-demo.mp4`; completed documentation; LinkedIn post prepared, publication pending |
+| 60 | `demo/microscopy-app-demo.mp4`; completed documentation; [LinkedIn demonstration published](https://www.linkedin.com/feed/update/urn:li:activity:7524937176745455616/) |
 
 Dataset-based scripts require the Day 47 download. Evaluation reuses the saved Day 49 sample prediction. Stress scripts require local model weights or internet access and save their results under `results/day58/`. The real-image stress script uses Apple MPS on the development Mac. The generated stress script includes a CPU fallback.
 
 ## Demonstration publication status
 
-The video is an edited sequence of actual app screen captures using generated input, not a continuous live recording. LinkedIn publication was attempted through the signed-in Safari session, but the editor repeatedly rendered blank and its upload controls could not be used. No post was published. The ready-to-publish text is in `demo/LINKEDIN_POST.txt`; attach `demo/microscopy-app-demo.mp4` when publishing.
+The video is an edited sequence of actual app screen captures using generated input, not a continuous live recording. The [LinkedIn video demonstration](https://www.linkedin.com/feed/update/urn:li:activity:7524937176745455616/) was published successfully on 8 November 2026. The published post and video playback were verified in the browser. Day 60 is complete.
